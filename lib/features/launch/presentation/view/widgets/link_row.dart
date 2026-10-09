@@ -16,25 +16,28 @@ class LinkRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return CardSurface(
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 4,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
+    return SizedBox(
+      width: double.infinity,
+      child: CardSurface(
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 4,
+          children: [
+            Text(
+              label,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
-          ),
-          Text(
-            value,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.primary,
+            Text(
+              value,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
