@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
@@ -9,6 +11,7 @@ import 'package:space_launches/features/launch/presentation/bloc/detail/launch_d
 import 'package:space_launches/features/launch/presentation/utils/launch_format.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/card_surface.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/fact_row.dart';
+import 'package:space_launches/features/launch/presentation/view/widgets/link_row.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/status_chip.dart';
 import 'package:space_launches/l10n/app_localizations.dart';
 
@@ -114,6 +117,16 @@ class _DetailContent extends StatelessWidget {
                     ],
                   ),
                 ),
+              LinkRow(
+                label: l10n.detailProvider,
+                value: launch.provider.name,
+                onTap: () => context.push(AppRoutes.agency(launch.provider.id)),
+              ),
+              LinkRow(
+                label: l10n.detailPad,
+                value: launch.pad.name,
+                onTap: () => context.push(AppRoutes.pad(launch.pad.id)),
+              ),
             ],
           ),
         ),

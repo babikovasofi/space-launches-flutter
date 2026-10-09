@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
+import 'package:space_launches/features/launch/presentation/view/agency_screen.dart';
 import 'package:space_launches/features/launch/presentation/view/launch_detail_screen.dart';
 import 'package:space_launches/features/launch/presentation/view/launch_list_screen.dart';
+import 'package:space_launches/features/launch/presentation/view/pad_screen.dart';
 import 'package:space_launches/l10n/app_localizations.dart';
 
 abstract final class AppRoutes {
   static const String list = '/';
 
   static String launch(String id) => '/launch/$id';
+
+  static String agency(int id) => '/agency/$id';
+
+  static String pad(int id) => '/pad/$id';
 }
 
 abstract final class AppRouter {
@@ -32,6 +38,26 @@ abstract final class AppRouter {
                 state,
                 LaunchDetailScreen(id: state.pathParameters['id']!),
               ),
+            ),
+            GoRoute(
+              path: 'agency/:id',
+              pageBuilder: (context, state) {
+                final id = int.tryParse(state.pathParameters['id']!);
+                return _page(
+                  state,
+                  id == null ? const NotFoundScreen() : AgencyScreen(id: id),
+                );
+              },
+            ),
+            GoRoute(
+              path: 'pad/:id',
+              pageBuilder: (context, state) {
+                final id = int.tryParse(state.pathParameters['id']!);
+                return _page(
+                  state,
+                  id == null ? const NotFoundScreen() : PadScreen(id: id),
+                );
+              },
             ),
           ],
         ),
