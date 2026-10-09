@@ -1,4 +1,4 @@
-import 'launch_model.dart';
+import 'package:space_launches/features/launch/domain/launch_model.dart';
 
 final class PadModel {
   const PadModel({
