@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
 import 'package:space_launches/features/launch/presentation/utils/launch_format.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/card_surface.dart';
@@ -13,6 +15,7 @@ class LaunchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return CardSurface(
+      onTap: () => context.push(AppRoutes.launch(launch.id)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

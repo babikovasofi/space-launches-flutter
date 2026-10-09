@@ -11,3 +11,7 @@ extension LaunchFormat on LaunchModel {
 
   String get rocketImage => ImageSources.rocket(rocket.id);
 }
+
+extension OrbitFormat on OrbitModel {
+  String get display => '$name ($abbrev)';
+}
