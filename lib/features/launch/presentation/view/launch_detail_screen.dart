@@ -53,6 +53,7 @@ class _DetailContent extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final mission = launch.mission;
+    final orbit = mission?.orbit;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Center(
@@ -106,7 +107,7 @@ class _DetailContent extends StatelessWidget {
                         label: l10n.detailMissionType,
                         value: mission.type,
                       ),
-                      if (mission.orbit case final orbit?)
+                      if (orbit != null)
                         FactRow(label: l10n.detailOrbit, value: orbit.display),
                       Text(
                         mission.description,

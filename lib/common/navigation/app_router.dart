@@ -45,7 +45,7 @@ abstract final class AppRouter {
                 final id = int.tryParse(state.pathParameters['id']!);
                 return _page(
                   state,
-                  id == null ? const NotFoundScreen() : AgencyScreen(id: id),
+                  id == null ? const _NotFoundScreen() : AgencyScreen(id: id),
                 );
               },
             ),
@@ -55,14 +55,14 @@ abstract final class AppRouter {
                 final id = int.tryParse(state.pathParameters['id']!);
                 return _page(
                   state,
-                  id == null ? const NotFoundScreen() : PadScreen(id: id),
+                  id == null ? const _NotFoundScreen() : PadScreen(id: id),
                 );
               },
             ),
           ],
         ),
       ],
-      errorBuilder: (context, state) => const NotFoundScreen(),
+      errorBuilder: (context, state) => const _NotFoundScreen(),
     );
   }
 
@@ -92,8 +92,8 @@ abstract final class AppRouter {
   }
 }
 
-class NotFoundScreen extends StatelessWidget {
-  const NotFoundScreen({super.key});
+class _NotFoundScreen extends StatelessWidget {
+  const _NotFoundScreen();
 
   @override
   Widget build(BuildContext context) {
