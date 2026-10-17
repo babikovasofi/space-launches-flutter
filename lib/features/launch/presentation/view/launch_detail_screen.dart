@@ -5,8 +5,7 @@ import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
-import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_bloc.dart';
-import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_event.dart';
+import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_cubit.dart';
 import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_state.dart';
 import 'package:space_launches/features/launch/presentation/utils/launch_format.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/card_surface.dart';
@@ -24,10 +23,9 @@ class LaunchDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          LaunchDetailBloc(context.read<ILaunchRepository>())
-            ..add(LaunchDetailOpened(id)),
+          LaunchDetailCubit(context.read<ILaunchRepository>())..load(id),
       child: AppScaffold(
-        body: BlocBuilder<LaunchDetailBloc, LaunchDetailState>(
+        body: BlocBuilder<LaunchDetailCubit, LaunchDetailState>(
           builder: (context, state) => switch (state) {
             LaunchDetailLoading() => const Center(
               child: CircularProgressIndicator(),

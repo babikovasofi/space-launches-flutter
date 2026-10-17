@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
-import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_cubit.dart';
+import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_bloc.dart';
+import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_event.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_state.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/launch_card.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/search_field.dart';
@@ -18,11 +19,13 @@ class LaunchListScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: SearchField(
-              onChanged: context.read<LaunchListCubit>().search,
+              onChanged: (query) => context.read<LaunchListBloc>().add(
+                LaunchListQueryChanged(query),
+              ),
             ),
           ),
           Expanded(
-            child: BlocBuilder<LaunchListCubit, LaunchListState>(
+            child: BlocBuilder<LaunchListBloc, LaunchListState>(
               builder: (context, state) {
                 if (state.items.isEmpty && state.query.isNotEmpty) {
                   return Center(

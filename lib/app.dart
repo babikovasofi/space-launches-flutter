@@ -5,7 +5,8 @@ import 'package:space_launches/common/theme/app_theme.dart';
 import 'package:space_launches/common/theme/theme_cubit.dart';
 import 'package:space_launches/features/launch/data/launch_repository.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
-import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_cubit.dart';
+import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_bloc.dart';
+import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_event.dart';
 import 'package:space_launches/l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
@@ -21,7 +22,8 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) =>
-                LaunchListCubit(context.read<ILaunchRepository>())..load(),
+                LaunchListBloc(context.read<ILaunchRepository>())
+                  ..add(const LaunchListStarted()),
           ),
           BlocProvider(create: (_) => ThemeCubit()),
         ],
