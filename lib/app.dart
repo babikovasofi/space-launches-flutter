@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_launches/common/navigation/app_router.dart';
+import 'package:space_launches/common/network/dio_client.dart';
 import 'package:space_launches/common/theme/app_theme.dart';
 import 'package:space_launches/common/theme/theme_cubit.dart';
+import 'package:space_launches/features/launch/data/api/launch_api.dart';
+import 'package:space_launches/features/launch/data/data_sources/network_launch_data_source.dart';
 import 'package:space_launches/features/launch/data/launch_repository.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_bloc.dart';
@@ -17,7 +20,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<ILaunchRepository>(
-      create: (_) => const LaunchRepository(),
+      create: (_) => LaunchRepository(
+        NetworkLaunchDataSource(LaunchApi(DioClient.create())),
+      ),
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
