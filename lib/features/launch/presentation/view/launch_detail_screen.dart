@@ -12,6 +12,7 @@ import 'package:space_launches/features/launch/presentation/utils/launch_format.
 import 'package:space_launches/features/launch/presentation/view/widgets/card_surface.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/fact_row.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/link_row.dart';
+import 'package:space_launches/features/launch/presentation/view/widgets/rocket_image.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/status_chip.dart';
 import 'package:space_launches/l10n/app_localizations.dart';
 
@@ -70,11 +71,10 @@ class _DetailContent extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  launch.rocketImage,
-                  height: 200,
+                child: RocketImage(
+                  url: launch.imageUrl,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  height: 200,
                 ),
               ),
               Text(launch.name, style: theme.textTheme.headlineSmall),
