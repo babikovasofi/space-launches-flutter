@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
+import 'package:space_launches/common/widgets/load_error_view.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
 import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_cubit.dart';
@@ -32,6 +33,12 @@ class LaunchDetailScreen extends StatelessWidget {
             ),
             LaunchDetailNotFound(:final id) => Center(
               child: Text(AppLocalizations.of(context).detailNotFound(id)),
+            ),
+            LaunchDetailFailure(:final error) => Center(
+              child: LoadErrorView(
+                error: error,
+                onRetry: () => context.read<LaunchDetailCubit>().load(id),
+              ),
             ),
             LaunchDetailLoaded(:final launch) => _DetailContent(launch: launch),
           },

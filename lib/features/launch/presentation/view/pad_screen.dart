@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
+import 'package:space_launches/common/widgets/load_error_view.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/domain/pad_model.dart';
 import 'package:space_launches/features/launch/presentation/bloc/pad/pad_cubit.dart';
@@ -26,6 +27,12 @@ class PadScreen extends StatelessWidget {
             PadNotFound(:final id) => Center(
               child: Text(
                 AppLocalizations.of(context).detailNotFound(id.toString()),
+              ),
+            ),
+            PadFailure(:final error) => Center(
+              child: LoadErrorView(
+                error: error,
+                onRetry: () => context.read<PadCubit>().load(id),
               ),
             ),
             PadLoaded(:final pad) => _PadContent(pad: pad),

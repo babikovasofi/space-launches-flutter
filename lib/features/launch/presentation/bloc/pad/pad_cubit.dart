@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:space_launches/common/network/load_exception.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/presentation/bloc/pad/pad_state.dart';
 
@@ -8,8 +9,14 @@ class PadCubit extends Cubit<PadState> {
   final ILaunchRepository _repository;
 
   Future<void> load(int id) async {
-    final pad = await _repository.getPad(id);
-    if (isClosed) return;
-    emit(pad == null ? PadNotFound(id) : PadLoaded(pad));
+    emit(const PadLoading());
+    try {
+      final pad = await _repository.getPad(id);
+      if (isClosed) return;
+      emit(pad == null ? PadNotFound(id) : PadLoaded(pad));
+    } on LoadException catch (error) {
+      if (isClosed) return;
+      emit(PadFailure(error));
+    }
   }
 }

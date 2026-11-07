@@ -1,3 +1,4 @@
+import 'package:space_launches/common/network/load_exception.dart';
 import 'package:space_launches/features/launch/domain/pad_model.dart';
 
 sealed class PadState {
@@ -18,4 +19,10 @@ final class PadNotFound extends PadState {
   const PadNotFound(this.id);
 
   final int id;
+}
+
+final class PadFailure extends PadState {
+  const PadFailure(this.error);
+
+  final LoadException error;
 }
