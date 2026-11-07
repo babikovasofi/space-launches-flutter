@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
+import 'package:space_launches/common/widgets/load_error_view.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_bloc.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_event.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_state.dart';
@@ -26,28 +27,91 @@ class LaunchListScreen extends StatelessWidget {
           ),
           Expanded(
             child: BlocBuilder<LaunchListBloc, LaunchListState>(
-              builder: (context, state) {
-                if (state.items.isEmpty && state.query.isNotEmpty) {
-                  return Center(
-                    child: Text(
-                      AppLocalizations.of(context).searchNotFound(state.query),
+              builder: (context, state) => switch (state) {
+                LaunchListLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                LaunchListFailure(:final error) => Center(
+                  child: LoadErrorView(
+                    error: error,
+                    onRetry: () => context.read<LaunchListBloc>().add(
+                      const LaunchListRetried(),
                     ),
-                  );
-                }
-                return ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: state.items.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final launch = state.items[index];
-                    return LaunchCard(key: ValueKey(launch.id), launch: launch);
-                  },
-                );
+                  ),
+                ),
+                LaunchListLoaded(:final items, :final query)
+                    when items.isEmpty && query.isNotEmpty =>
+                  Center(
+                    child: Text(
+                      AppLocalizations.of(context).searchNotFound(query),
+                    ),
+                  ),
+                LaunchListLoaded(:final items) when items.isEmpty => Center(
+                  child: Text(AppLocalizations.of(context).listEmpty),
+                ),
+                final LaunchListLoaded loaded => _LaunchListView(state: loaded),
               },
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LaunchListView extends StatefulWidget {
+  const _LaunchListView({required this.state});
+
+  final LaunchListLoaded state;
+
+  @override
+  State<_LaunchListView> createState() => _LaunchListViewState();
+}
+
+class _LaunchListViewState extends State<_LaunchListView> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController()..addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_controller.position.extentAfter < 400) {
+      context.read<LaunchListBloc>().add(const LaunchListNextPageRequested());
+    }
+  }
+
+  void _retryNextPage() {
+    context.read<LaunchListBloc>().add(const LaunchListNextPageRetried());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = widget.state;
+    final showFooter = state.isLoadingMore || state.loadMoreError != null;
+    return ListView.separated(
+      controller: _controller,
+      padding: const EdgeInsets.all(16),
+      itemCount: state.items.length + (showFooter ? 1 : 0),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        if (index == state.items.length) {
+          final error = state.loadMoreError;
+          return error == null
+              ? const Center(child: CircularProgressIndicator())
+              : LoadErrorView(error: error, onRetry: _retryNextPage);
+        }
+        final launch = state.items[index];
+        return LaunchCard(key: ValueKey(launch.id), launch: launch);
+      },
     );
   }
 }

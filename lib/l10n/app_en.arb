@@ -12,6 +12,7 @@
       }
     }
   },
+  "listEmpty": "No launches",
   "detailNet": "Launch date",
   "detailRocket": "Rocket",
   "detailMission": "Mission",
@@ -35,5 +36,11 @@
   "padLocation": "Location",
   "padCountry": "Country",
   "padCoordinates": "Coordinates",
-  "padLaunchesTotal": "Launches total"
+  "padLaunchesTotal": "Launches total",
+  "errorNoConnection": "No connection to the server. Check your internet",
+  "errorTimeout": "The server is taking too long to respond",
+  "errorNotFound": "No such record",
+  "errorServer": "Server error",
+  "errorBadResponse": "The server sent an unexpected response",
+  "actionRetry": "Retry"
 }

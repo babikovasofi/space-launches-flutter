@@ -19,7 +19,7 @@ final class LaunchModel {
   final RocketConfigurationModel rocket;
   final MissionModel? mission;
   final LaunchPadModel pad;
-  final String imageUrl;
+  final String? imageUrl;
 }
 
 final class LaunchStatusModel {

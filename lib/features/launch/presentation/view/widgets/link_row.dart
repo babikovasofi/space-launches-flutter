@@ -7,11 +7,13 @@ class LinkRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.onTap,
+    this.details,
   });
 
   final String label;
   final String value;
   final VoidCallback onTap;
+  final Widget? details;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class LinkRow extends StatelessWidget {
                 color: theme.colorScheme.primary,
               ),
             ),
+            ?details,
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:space_launches/common/network/load_exception.dart';
 import 'package:space_launches/features/launch/domain/agency_model.dart';
 
 sealed class AgencyState {
@@ -18,4 +19,10 @@ final class AgencyNotFound extends AgencyState {
   const AgencyNotFound(this.id);
 
   final int id;
+}
+
+final class AgencyFailure extends AgencyState {
+  const AgencyFailure(this.error);
+
+  final LoadException error;
 }

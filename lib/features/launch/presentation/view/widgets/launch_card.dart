@@ -4,6 +4,7 @@ import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
 import 'package:space_launches/features/launch/presentation/utils/launch_format.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/card_surface.dart';
+import 'package:space_launches/features/launch/presentation/view/widgets/rocket_image.dart';
 import 'package:space_launches/features/launch/presentation/view/widgets/status_chip.dart';
 
 class LaunchCard extends StatelessWidget {
@@ -21,12 +22,7 @@ class LaunchCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              launch.rocketImage,
-              width: 96,
-              height: 80,
-              fit: BoxFit.cover,
-            ),
+            child: RocketImage(url: launch.imageUrl, width: 96, height: 80),
           ),
           const SizedBox(width: 12),
           Expanded(

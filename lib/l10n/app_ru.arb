@@ -12,6 +12,7 @@
       }
     }
   },
+  "listEmpty": "Запусков нет",
   "detailNet": "Дата пуска",
   "detailRocket": "Ракета",
   "detailMission": "Миссия",
@@ -35,5 +36,11 @@
   "padLocation": "Расположение",
   "padCountry": "Страна",
   "padCoordinates": "Координаты",
-  "padLaunchesTotal": "Всего пусков"
+  "padLaunchesTotal": "Всего пусков",
+  "errorNoConnection": "Нет связи с сервером. Проверьте интернет",
+  "errorTimeout": "Сервер долго не отвечает",
+  "errorNotFound": "Такой записи нет",
+  "errorServer": "Ошибка сервера",
+  "errorBadResponse": "Сервер прислал непонятный ответ",
+  "actionRetry": "Повторить"
 }
