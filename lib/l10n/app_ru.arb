@@ -12,6 +12,7 @@
       }
     }
   },
+  "listEmpty": "Запусков нет",
   "detailNet": "Дата пуска",
   "detailRocket": "Ракета",
   "detailMission": "Миссия",

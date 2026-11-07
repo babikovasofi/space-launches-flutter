@@ -46,6 +46,9 @@ class LaunchListScreen extends StatelessWidget {
                       AppLocalizations.of(context).searchNotFound(query),
                     ),
                   ),
+                LaunchListLoaded(:final items) when items.isEmpty => Center(
+                  child: Text(AppLocalizations.of(context).listEmpty),
+                ),
                 final LaunchListLoaded loaded => _LaunchListView(state: loaded),
               },
             ),

@@ -12,6 +12,7 @@
       }
     }
   },
+  "listEmpty": "No launches",
   "detailNet": "Launch date",
   "detailRocket": "Rocket",
   "detailMission": "Mission",
