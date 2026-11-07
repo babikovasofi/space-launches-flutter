@@ -82,12 +82,12 @@ class _LaunchListViewState extends State<_LaunchListView> {
 
   void _onScroll() {
     if (_controller.position.extentAfter < 400) {
-      _requestNextPage();
+      context.read<LaunchListBloc>().add(const LaunchListNextPageRequested());
     }
   }
 
-  void _requestNextPage() {
-    context.read<LaunchListBloc>().add(const LaunchListNextPageRequested());
+  void _retryNextPage() {
+    context.read<LaunchListBloc>().add(const LaunchListNextPageRetried());
   }
 
   @override
@@ -104,7 +104,7 @@ class _LaunchListViewState extends State<_LaunchListView> {
           final error = state.loadMoreError;
           return error == null
               ? const Center(child: CircularProgressIndicator())
-              : LoadErrorView(error: error, onRetry: _requestNextPage);
+              : LoadErrorView(error: error, onRetry: _retryNextPage);
         }
         final launch = state.items[index];
         return LaunchCard(key: ValueKey(launch.id), launch: launch);

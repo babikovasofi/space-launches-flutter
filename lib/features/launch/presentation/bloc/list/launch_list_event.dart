@@ -20,6 +20,14 @@ final class LaunchListRetried extends LaunchListFirstPageEvent {
   const LaunchListRetried();
 }
 
-final class LaunchListNextPageRequested extends LaunchListEvent {
+sealed class LaunchListNextPageEvent extends LaunchListEvent {
+  const LaunchListNextPageEvent();
+}
+
+final class LaunchListNextPageRequested extends LaunchListNextPageEvent {
   const LaunchListNextPageRequested();
+}
+
+final class LaunchListNextPageRetried extends LaunchListNextPageEvent {
+  const LaunchListNextPageRetried();
 }

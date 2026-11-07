@@ -9,7 +9,7 @@ import 'package:space_launches/features/launch/presentation/bloc/list/launch_lis
 class LaunchListBloc extends Bloc<LaunchListEvent, LaunchListState> {
   LaunchListBloc(this._repository) : super(const LaunchListLoading(query: '')) {
     on<LaunchListFirstPageEvent>(_onFirstPage, transformer: restartable());
-    on<LaunchListNextPageRequested>(_onNextPage, transformer: droppable());
+    on<LaunchListNextPageEvent>(_onNextPage, transformer: droppable());
   }
 
   final ILaunchRepository _repository;
@@ -41,13 +41,16 @@ class LaunchListBloc extends Bloc<LaunchListEvent, LaunchListState> {
   }
 
   Future<void> _onNextPage(
-    LaunchListNextPageRequested event,
+    LaunchListNextPageEvent event,
     Emitter<LaunchListState> emit,
   ) async {
     final current = state;
     if (current is! LaunchListLoaded ||
         !current.hasMore ||
         current.isLoadingMore) {
+      return;
+    }
+    if (current.loadMoreError != null && event is LaunchListNextPageRequested) {
       return;
     }
     final loading = LaunchListLoaded(
