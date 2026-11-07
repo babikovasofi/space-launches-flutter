@@ -1,0 +1,39 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Космические запуски",
+  "actionToggleTheme": "Сменить тему",
+  "actionClearSearch": "Очистить поиск",
+  "searchHint": "Поиск по названию",
+  "searchNotFound": "По запросу «{query}» ничего не найдено",
+  "@searchNotFound": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "detailNet": "Дата пуска",
+  "detailRocket": "Ракета",
+  "detailMission": "Миссия",
+  "detailMissionType": "Тип миссии",
+  "detailOrbit": "Орбита",
+  "detailProvider": "Агентство",
+  "detailPad": "Площадка",
+  "detailNotFound": "Записи «{id}» в каталоге нет",
+  "@detailNotFound": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "pageNotFound": "Такой страницы нет",
+  "agencyType": "Тип",
+  "agencyCountry": "Страна",
+  "agencyFounded": "Год основания",
+  "agencyLaunchesTotal": "Всего пусков",
+  "padLocation": "Расположение",
+  "padCountry": "Страна",
+  "padCoordinates": "Координаты",
+  "padLaunchesTotal": "Всего пусков"
+}

@@ -1,0 +1,39 @@
+{
+  "@@locale": "en",
+  "appTitle": "Space launches",
+  "actionToggleTheme": "Toggle theme",
+  "actionClearSearch": "Clear search",
+  "searchHint": "Search by name",
+  "searchNotFound": "Nothing found for «{query}»",
+  "@searchNotFound": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "detailNet": "Launch date",
+  "detailRocket": "Rocket",
+  "detailMission": "Mission",
+  "detailMissionType": "Mission type",
+  "detailOrbit": "Orbit",
+  "detailProvider": "Agency",
+  "detailPad": "Launch pad",
+  "detailNotFound": "There is no «{id}» record in the catalog",
+  "@detailNotFound": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "pageNotFound": "No such page",
+  "agencyType": "Type",
+  "agencyCountry": "Country",
+  "agencyFounded": "Founded",
+  "agencyLaunchesTotal": "Launches total",
+  "padLocation": "Location",
+  "padCountry": "Country",
+  "padCoordinates": "Coordinates",
+  "padLaunchesTotal": "Launches total"
+}
