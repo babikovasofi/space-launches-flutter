@@ -4,7 +4,7 @@
 
 Приложение показывает каталог космических запусков. У каждого запуска есть название, дата, статус, ракета и миссия с орбитой. Запуск проводит космическое агентство и выполняет со стартовой площадки, поэтому с экрана запуска можно перейти к агентству и к площадке.
 
-Данные пока моковые: 22 запуска, 13 агентств и 20 площадок повторяют форму ответа API [Launch Library 2](https://ll.thespacedevs.com/2.2.0/).
+Данные загружаются из API [Launch Library 2](https://lldev.thespacedevs.com/2.2.0/) — зеркала для разработки, без ограничения на число запросов.
 
 ## Запуск
 
@@ -42,4 +42,10 @@ flutter run -d chrome --dart-define=LOCALE=en
 
 ```bash
 dart run tool/check_arb.dart
+```
+
+Генерация DTO после правки файлов в `lib/features/launch/data/dto/`:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
 ```
