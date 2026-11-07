@@ -14,8 +14,13 @@ final class NetworkLaunchDataSource implements ILaunchDataSource {
   final LaunchApi _api;
 
   @override
-  Future<LaunchPageDto> getLaunches({required int limit, String? search}) =>
-      _guard(() => _api.getLaunches(limit: limit, search: search));
+  Future<LaunchPageDto> getLaunches({
+    required int offset,
+    required int limit,
+    String? search,
+  }) => _guard(
+    () => _api.getLaunches(offset: offset, limit: limit, search: search),
+  );
 
   @override
   Future<LaunchDto> getLaunch(String id) => _guard(() => _api.getLaunch(id));

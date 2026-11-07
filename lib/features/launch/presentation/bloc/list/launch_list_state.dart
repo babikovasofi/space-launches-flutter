@@ -12,9 +12,18 @@ final class LaunchListLoading extends LaunchListState {
 }
 
 final class LaunchListLoaded extends LaunchListState {
-  const LaunchListLoaded({required super.query, required this.items});
+  const LaunchListLoaded({
+    required super.query,
+    required this.items,
+    required this.hasMore,
+    this.isLoadingMore = false,
+    this.loadMoreError,
+  });
 
   final List<LaunchModel> items;
+  final bool hasMore;
+  final bool isLoadingMore;
+  final LoadException? loadMoreError;
 }
 
 final class LaunchListFailure extends LaunchListState {

@@ -10,12 +10,13 @@ final class LaunchApi {
   final Dio _dio;
 
   Future<LaunchPageDto> getLaunches({
+    required int offset,
     required int limit,
     String? search,
   }) async => LaunchPageDto.fromJson(
     await _getJson(
       '/launch/',
-      queryParameters: {'limit': limit, 'search': ?search},
+      queryParameters: {'offset': offset, 'limit': limit, 'search': ?search},
     ),
   );
 

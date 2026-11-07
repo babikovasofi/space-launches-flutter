@@ -3,9 +3,16 @@ import 'package:space_launches/features/launch/domain/launch_model.dart';
 import 'package:space_launches/features/launch/domain/pad_model.dart';
 
 abstract interface class ILaunchRepository {
-  Future<List<LaunchModel>> getLaunches();
+  Future<List<LaunchModel>> getLaunches({
+    required int offset,
+    required int limit,
+  });
 
-  Future<List<LaunchModel>> searchLaunches(String query);
+  Future<List<LaunchModel>> searchLaunches(
+    String query, {
+    required int offset,
+    required int limit,
+  });
 
   Future<LaunchModel?> getLaunch(String id);
 

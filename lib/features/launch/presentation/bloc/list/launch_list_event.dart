@@ -2,16 +2,24 @@ sealed class LaunchListEvent {
   const LaunchListEvent();
 }
 
-final class LaunchListStarted extends LaunchListEvent {
+sealed class LaunchListFirstPageEvent extends LaunchListEvent {
+  const LaunchListFirstPageEvent();
+}
+
+final class LaunchListStarted extends LaunchListFirstPageEvent {
   const LaunchListStarted();
 }
 
-final class LaunchListQueryChanged extends LaunchListEvent {
+final class LaunchListQueryChanged extends LaunchListFirstPageEvent {
   const LaunchListQueryChanged(this.query);
 
   final String query;
 }
 
-final class LaunchListRetried extends LaunchListEvent {
+final class LaunchListRetried extends LaunchListFirstPageEvent {
   const LaunchListRetried();
+}
+
+final class LaunchListNextPageRequested extends LaunchListEvent {
+  const LaunchListNextPageRequested();
 }

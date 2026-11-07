@@ -11,15 +11,24 @@ final class LaunchRepository implements ILaunchRepository {
 
   final ILaunchDataSource _dataSource;
 
-  static const int _limit = 20;
+  @override
+  Future<List<LaunchModel>> getLaunches({
+    required int offset,
+    required int limit,
+  }) => _loadLaunches(offset: offset, limit: limit);
 
   @override
-  Future<List<LaunchModel>> getLaunches() => _loadLaunches();
-
-  @override
-  Future<List<LaunchModel>> searchLaunches(String query) {
+  Future<List<LaunchModel>> searchLaunches(
+    String query, {
+    required int offset,
+    required int limit,
+  }) {
     final needle = query.trim();
-    return _loadLaunches(search: needle.isEmpty ? null : needle);
+    return _loadLaunches(
+      offset: offset,
+      limit: limit,
+      search: needle.isEmpty ? null : needle,
+    );
   }
 
   @override
@@ -34,8 +43,16 @@ final class LaunchRepository implements ILaunchRepository {
   Future<PadModel?> getPad(int id) =>
       _nullIfNotFound(() async => (await _dataSource.getPad(id)).toModel());
 
-  Future<List<LaunchModel>> _loadLaunches({String? search}) async {
-    final page = await _dataSource.getLaunches(limit: _limit, search: search);
+  Future<List<LaunchModel>> _loadLaunches({
+    required int offset,
+    required int limit,
+    String? search,
+  }) async {
+    final page = await _dataSource.getLaunches(
+      offset: offset,
+      limit: limit,
+      search: search,
+    );
     return [for (final dto in page.results) dto.toModel()];
   }
 

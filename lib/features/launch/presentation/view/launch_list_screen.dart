@@ -46,20 +46,69 @@ class LaunchListScreen extends StatelessWidget {
                       AppLocalizations.of(context).searchNotFound(query),
                     ),
                   ),
-                LaunchListLoaded(:final items) => ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: items.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final launch = items[index];
-                    return LaunchCard(key: ValueKey(launch.id), launch: launch);
-                  },
-                ),
+                final LaunchListLoaded loaded => _LaunchListView(state: loaded),
               },
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LaunchListView extends StatefulWidget {
+  const _LaunchListView({required this.state});
+
+  final LaunchListLoaded state;
+
+  @override
+  State<_LaunchListView> createState() => _LaunchListViewState();
+}
+
+class _LaunchListViewState extends State<_LaunchListView> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController()..addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_controller.position.extentAfter < 400) {
+      _requestNextPage();
+    }
+  }
+
+  void _requestNextPage() {
+    context.read<LaunchListBloc>().add(const LaunchListNextPageRequested());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = widget.state;
+    final showFooter = state.isLoadingMore || state.loadMoreError != null;
+    return ListView.separated(
+      controller: _controller,
+      padding: const EdgeInsets.all(16),
+      itemCount: state.items.length + (showFooter ? 1 : 0),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        if (index == state.items.length) {
+          final error = state.loadMoreError;
+          return error == null
+              ? const Center(child: CircularProgressIndicator())
+              : LoadErrorView(error: error, onRetry: _requestNextPage);
+        }
+        final launch = state.items[index];
+        return LaunchCard(key: ValueKey(launch.id), launch: launch);
+      },
     );
   }
 }
