@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:space_launches/common/navigation/app_router.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
 import 'package:space_launches/common/widgets/load_error_view.dart';
+import 'package:space_launches/features/launch/domain/agency_model.dart';
 import 'package:space_launches/features/launch/domain/i_launch_repository.dart';
 import 'package:space_launches/features/launch/domain/launch_model.dart';
+import 'package:space_launches/features/launch/domain/pad_model.dart';
 import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_cubit.dart';
 import 'package:space_launches/features/launch/presentation/bloc/detail/launch_detail_state.dart';
 import 'package:space_launches/features/launch/presentation/utils/launch_format.dart';
@@ -41,7 +43,8 @@ class LaunchDetailScreen extends StatelessWidget {
                 onRetry: () => context.read<LaunchDetailCubit>().load(id),
               ),
             ),
-            LaunchDetailLoaded(:final launch) => _DetailContent(launch: launch),
+            LaunchDetailLoaded(:final launch, :final agency, :final pad) =>
+              _DetailContent(launch: launch, agency: agency, pad: pad),
           },
         ),
       ),
@@ -50,9 +53,15 @@ class LaunchDetailScreen extends StatelessWidget {
 }
 
 class _DetailContent extends StatelessWidget {
-  const _DetailContent({required this.launch});
+  const _DetailContent({
+    required this.launch,
+    required this.agency,
+    required this.pad,
+  });
 
   final LaunchModel launch;
+  final AgencyModel? agency;
+  final PadModel? pad;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +69,8 @@ class _DetailContent extends StatelessWidget {
     final theme = Theme.of(context);
     final mission = launch.mission;
     final orbit = mission?.orbit;
+    final agency = this.agency;
+    final pad = this.pad;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Center(
@@ -126,11 +137,23 @@ class _DetailContent extends StatelessWidget {
               LinkRow(
                 label: l10n.detailProvider,
                 value: launch.provider.name,
+                details: agency == null
+                    ? null
+                    : FactRow(
+                        label: l10n.agencyLaunchesTotal,
+                        value: agency.totalLaunchCount.toString(),
+                      ),
                 onTap: () => context.push(AppRoutes.agency(launch.provider.id)),
               ),
               LinkRow(
                 label: l10n.detailPad,
                 value: launch.pad.name,
+                details: pad == null
+                    ? null
+                    : FactRow(
+                        label: l10n.padLaunchesTotal,
+                        value: pad.totalLaunchCount.toString(),
+                      ),
                 onTap: () => context.push(AppRoutes.pad(launch.pad.id)),
               ),
             ],
