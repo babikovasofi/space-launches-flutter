@@ -41,8 +41,7 @@ class LaunchDetailCubit extends Cubit<LaunchDetailState> {
       (AgencyModel?, PadModel?),
       (AsyncError?, AsyncError?)
     > catch (error) {
-      final first = (error.errors.$1 ?? error.errors.$2)!;
-      Error.throwWithStackTrace(first.error, first.stackTrace);
+      return error.values;
     }
   }
 }
