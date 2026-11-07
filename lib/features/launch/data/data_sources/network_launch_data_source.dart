@@ -45,7 +45,7 @@ final class NetworkLaunchDataSource implements ILaunchDataSource {
     DioExceptionType.transformTimeout => const TimeoutLoadException(),
     DioExceptionType.badResponse when error.response?.statusCode == 404 =>
       const NotFoundException(),
-    DioExceptionType.badResponse => ServerException(error.response?.statusCode),
+    DioExceptionType.badResponse => const ServerException(),
     DioExceptionType.unknown when error.error is FormatException =>
       const BadResponseException(),
     DioExceptionType.connectionError ||

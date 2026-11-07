@@ -15,9 +15,7 @@ final class NotFoundException extends LoadException {
 }
 
 final class ServerException extends LoadException {
-  const ServerException(this.statusCode);
-
-  final int? statusCode;
+  const ServerException();
 }
 
 final class BadResponseException extends LoadException {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:space_launches/common/widgets/app_scaffold.dart';
+import 'package:space_launches/common/widgets/load_error_view.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_bloc.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_event.dart';
 import 'package:space_launches/features/launch/presentation/bloc/list/launch_list_state.dart';
@@ -26,23 +27,34 @@ class LaunchListScreen extends StatelessWidget {
           ),
           Expanded(
             child: BlocBuilder<LaunchListBloc, LaunchListState>(
-              builder: (context, state) {
-                if (state.items.isEmpty && state.query.isNotEmpty) {
-                  return Center(
-                    child: Text(
-                      AppLocalizations.of(context).searchNotFound(state.query),
+              builder: (context, state) => switch (state) {
+                LaunchListLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                LaunchListFailure(:final error) => Center(
+                  child: LoadErrorView(
+                    error: error,
+                    onRetry: () => context.read<LaunchListBloc>().add(
+                      const LaunchListRetried(),
                     ),
-                  );
-                }
-                return ListView.separated(
+                  ),
+                ),
+                LaunchListLoaded(:final items, :final query)
+                    when items.isEmpty && query.isNotEmpty =>
+                  Center(
+                    child: Text(
+                      AppLocalizations.of(context).searchNotFound(query),
+                    ),
+                  ),
+                LaunchListLoaded(:final items) => ListView.separated(
                   padding: const EdgeInsets.all(16),
-                  itemCount: state.items.length,
+                  itemCount: items.length,
                   separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
-                    final launch = state.items[index];
+                    final launch = items[index];
                     return LaunchCard(key: ValueKey(launch.id), launch: launch);
                   },
-                );
+                ),
               },
             ),
           ),

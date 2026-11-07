@@ -11,3 +11,7 @@ final class LaunchListQueryChanged extends LaunchListEvent {
 
   final String query;
 }
+
+final class LaunchListRetried extends LaunchListEvent {
+  const LaunchListRetried();
+}
